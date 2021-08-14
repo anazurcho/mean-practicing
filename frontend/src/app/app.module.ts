@@ -34,7 +34,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatToolbarModule,
         MatExpansionModule,
     ],
-    providers: [],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
