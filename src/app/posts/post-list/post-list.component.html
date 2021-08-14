@@ -1,19 +1,27 @@
 <mat-accordion *ngIf="IsPostEmpty(); else NoPosts" multi="true">
-    <mat-expansion-panel *ngFor="let post of posts; index as i">
-        <mat-expansion-panel-header *ngIf="post">
-            <mat-panel-title>
-                <!-- index {{ i + 1 }} -->
-                {{ post.title }}
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p>{{ post.content }}</p>
-        <mat-action-row>
-            <button mat-button color="accent">EDIT</button>
-            <button mat-button color="warn">DELETE</button>
-        </mat-action-row>
-    </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let post of posts; index as i">
+    <mat-expansion-panel-header *ngIf="post">
+      <mat-panel-title>
+        <!-- index {{ i + 1 }} -->
+        {{ post.id }} :
+        {{ post.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>{{ post.content }}</p>
+    <mat-action-row>
+      <button *ngIf="post.id" mat-button color="accent">EDIT</button>
+      <button
+        *ngIf="post.id"
+        mat-button
+        color="warn"
+        (click)="onDelete(post.id)"
+      >
+        DELETE
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
 </mat-accordion>
 
 <ng-template #NoPosts>
-    <p class="info-text mat-body-1">No Posts added yet!</p>
+  <p class="info-text mat-body-1">No Posts added yet!</p>
 </ng-template>
