@@ -1,0 +1,15 @@
+<mat-accordion *ngIf="IsPostEmpty(); else NoPosts" multi="true">
+    <mat-expansion-panel *ngFor="let post of posts; index as i">
+        <mat-expansion-panel-header *ngIf="post">
+            <mat-panel-title>
+                <!-- index {{ i + 1 }} -->
+                {{ post.title }}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>{{ post.content }}</p>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #NoPosts>
+    <p class="info-text mat-body-1">No Posts added yet!</p>
+</ng-template>
