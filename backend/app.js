@@ -42,7 +42,7 @@ app.post("/api/posts", (req, res, next) => {
   });
   post.save().then((createdPost) => {
     res.status(201).json({
-      message: "Post added succesfully",
+      message: "add Post succesfully",
       postId: createdPost._id,
     });
   });
@@ -52,7 +52,7 @@ app.get("/api/posts", (req, res, next) => {
   Post.find().then((documents) => {
     // console.log(documents);
     res.status(200).json({
-      message: "Posts Fetched Succesfully",
+      message: "GEt Posts Succesfully",
       posts: documents,
     });
   });
