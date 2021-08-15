@@ -23,10 +23,11 @@ export class PostsService {
       .pipe(
         map((postData) => {
           return postData.posts.map(
-            (post: { title: any; content: any; _id: any }) => {
+            (post: { title: any; content: any; _id: any; imagePath: any }) => {
               return {
                 title: post.title,
                 content: post.content,
+                imagePath: post.imagePath,
                 id: post._id,
               };
             }
@@ -52,16 +53,26 @@ export class PostsService {
   // this.posts.push(post);
   // this.postsUpdated.next([...this.posts]);
 
-  addPost(title: string, content: string) {
-    const post: Post = { id: "id", title: title, content: content };
+  addPost(title: string, content: string, image: File) {
+    // const post: Post = { id: "id", title: title, content: content };
+    const postData = new FormData();
+    postData.append("title", title);
+    postData.append("content", content);
+    postData.append("image", image, title);
     this.http
-      .post<{ message: string; postId: string }>(
+      .post<{ message: string; post: Post }>(
         environment.apiURL + "/posts",
-        post
+        postData
       )
       .subscribe((responseData) => {
-        const id = responseData.postId;
-        post.id = id;
+        const post: Post = {
+          id: responseData.post.id,
+          title: title,
+          content: content,
+          imagePath: responseData.post.imagePath,
+        };
+        // const id = responseData.postId;
+        // post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
         this.router.navigate(["/posts/posts"]);
@@ -69,7 +80,12 @@ export class PostsService {
   }
 
   updatePost(id: any, title: string, content: string) {
-    const post: Post = { id: id, title: title, content: content };
+    const post: Post = {
+      id: id,
+      title: title,
+      content: content,
+      imagePath: null,
+    };
     this.http
       .put(environment.apiURL + "/posts/" + id, post)
       .subscribe((response) => {
