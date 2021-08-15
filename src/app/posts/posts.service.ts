@@ -6,13 +6,14 @@ import { Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { Post } from "./post.model";
+import { Router } from "@angular/router";
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
   // return [...this.posts];
   // "http://localhost:9999/api/posts"
 
@@ -38,6 +39,12 @@ export class PostsService {
       });
   }
 
+  getPost(id: string | null) {
+    return this.http.get<{ _id: string; title: string; content: string }>(
+      environment.apiURL + "/posts/" + id
+    );
+  }
+
   getPostUpdateListener() {
     return this.postsUpdated.asObservable();
   }
@@ -46,7 +53,7 @@ export class PostsService {
   // this.postsUpdated.next([...this.posts]);
 
   addPost(title: string, content: string) {
-    const post: Post = { id: null, title: title, content: content };
+    const post: Post = { id: "id", title: title, content: content };
     this.http
       .post<{ message: string; postId: string }>(
         environment.apiURL + "/posts",
@@ -57,6 +64,21 @@ export class PostsService {
         post.id = id;
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
+        this.router.navigate(["/posts/posts"]);
+      });
+  }
+
+  updatePost(id: any, title: string, content: string) {
+    const post: Post = { id: id, title: title, content: content };
+    this.http
+      .put(environment.apiURL + "/posts/" + id, post)
+      .subscribe((response) => {
+        const updatedPosts = [...this.posts];
+        const oldPostIndex = updatedPosts.findIndex((p) => p.id === post.id);
+        updatedPosts[oldPostIndex] = post;
+        this.posts = updatedPosts;
+        this.postsUpdated.next([...this.posts]);
+        this.router.navigate(["/posts/posts"]);
       });
   }
 

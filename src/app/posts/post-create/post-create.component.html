@@ -1,39 +1,39 @@
 <mat-card>
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
-        <mat-card-content>
-            <mat-form-field>
-                <input
-                    matInput
-                    type="text"
-                    name="postTitle"
-                    #postTitle="ngModel"
-                    ngModel
-                    required
-                    minlength="2"
-                    placeholder="Post Title"
-                />
-                <!-- *ngIf="postForm.getControl('postTitle').invalid" -->
-                <mat-error *ngIf="postTitle.invalid"
-                    >Please Enter Title</mat-error
-                >
-            </mat-form-field>
-            <mat-form-field>
-                <input
-                    matInput
-                    rows="4"
-                    name="postContent"
-                    #postContent="ngModel"
-                    ngModel
-                    required
-                    placeholder="Post Content"
-                />
-                <mat-error *ngIf="postContent.invalid"
-                    >Please Enter Content</mat-error
-                >
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit">
-                Save Post
-            </button>
-        </mat-card-content>
-    </form>
+  <mat-spinner
+    layout="row"
+    layout-align="center center"
+    flex
+    *ngIf="isLoading"
+  ></mat-spinner>
+  <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
+    <mat-card-content>
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          name="postTitle"
+          #postTitle="ngModel"
+          [ngModel]="post?.title"
+          required
+          minlength="2"
+          placeholder="Post Title"
+        />
+        <!-- *ngIf="postForm.getControl('postTitle').invalid" -->
+        <mat-error *ngIf="postTitle.invalid">Please Enter Title</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          rows="4"
+          name="postContent"
+          #postContent="ngModel"
+          [ngModel]="post?.content"
+          required
+          placeholder="Post Content"
+        />
+        <mat-error *ngIf="postContent.invalid">Please Enter Content</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Save Post</button>
+    </mat-card-content>
+  </form>
 </mat-card>

@@ -3,21 +3,23 @@
     <mat-expansion-panel-header *ngIf="post">
       <mat-panel-title>
         <!-- index {{ i + 1 }} -->
-        {{ post.id }} :
+        <!-- {{ post.id }} : -->
         {{ post.title }}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <p>{{ post.content }}</p>
     <mat-action-row>
-      <button *ngIf="post.id" mat-button color="accent">EDIT</button>
       <button
         *ngIf="post.id"
         mat-button
-        color="warn"
-        (click)="onDelete(post.id)"
+        color="accent"
+        [routerLink]="['/posts/edit', post.id]"
       >
-        DELETE
+        EDIT
       </button>
+      <a *ngIf="post.id" mat-button color="warn" (click)="onDelete(post.id)">
+        DELETE
+      </a>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
