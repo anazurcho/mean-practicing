@@ -41,9 +41,12 @@ export class PostsService {
   }
 
   getPost(id: string | null) {
-    return this.http.get<{ _id: string; title: string; content: string }>(
-      environment.apiURL + "/posts/" + id
-    );
+    return this.http.get<{
+      _id: string;
+      title: string;
+      content: string;
+      imagePath: string;
+    }>(environment.apiURL + "/posts/" + id);
   }
 
   getPostUpdateListener() {
@@ -79,18 +82,35 @@ export class PostsService {
       });
   }
 
-  updatePost(id: any, title: string, content: string) {
-    const post: Post = {
-      id: id,
-      title: title,
-      content: content,
-      imagePath: null,
-    };
+  // updatePost(id: any, title: string, content: string, image: any) {
+  updatePost(id: any, title: string, content: string, image: any) {
+    let postData: Post | FormData;
+    if (typeof image === "object") {
+      postData = new FormData();
+      postData.append("id", id);
+      postData.append("title", title);
+      postData.append("content", content);
+      postData.append("image", image, title);
+    } else {
+      postData = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: image,
+      };
+    }
     this.http
-      .put(environment.apiURL + "/posts/" + id, post)
+      .put(environment.apiURL + "/posts/" + id, postData)
       .subscribe((response) => {
         const updatedPosts = [...this.posts];
-        const oldPostIndex = updatedPosts.findIndex((p) => p.id === post.id);
+        const oldPostIndex = updatedPosts.findIndex((p) => p.id === id);
+        const post: Post = {
+          id: id,
+          title: title,
+          content: content,
+          imagePath: "response.imagePath",
+        };
+        // სტრინგი შეცვალე
         updatedPosts[oldPostIndex] = post;
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
