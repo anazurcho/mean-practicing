@@ -11,11 +11,6 @@ import { PostsService } from "../posts.service";
   styleUrls: ["./post-list.component.css"],
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  // posts = [
-  //   { title: "First Post", content: "This is the first post's content" },
-  //   { title: "Second Post", content: "This is the second post's content" },
-  //   { title: "Third Post", content: "This is the third post's content" }
-  // ];
   pageIndex = 0;
   posts: Post[] = [];
   isLoading = false;
@@ -36,21 +31,16 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onDelete(postId: string) {
     this.isLoading = true;
-    this.postsService.deletePost(postId);
-    // this.postsService.getPosts(this.postsPerPage, this.currentPage);
-    // this.postsService.deletePost(postId).subscribe(() => {
-    //   this.postsService.getPosts(this.postsPerPage, this.currentPage);
-    // });
+    this.postsService.deletePost(postId).subscribe(() => {
+      this.postsService.getPosts(this.postsPerPage, this.currentPage);
+    });
   }
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
-    console.log(pageData);
     this.pageIndex = pageData.pageIndex;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
-    console.log("this.pageIndex, this.currentPage, this.postsPerPage");
-    console.log(this.pageIndex, this.currentPage, this.postsPerPage);
     this.postsService.getPosts(this.currentPage, this.postsPerPage);
   }
 
@@ -64,9 +54,6 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.totalPosts = postData.postCount;
         this.posts = postData.posts;
       });
-
-    console.log("this.pageIndex, this.currentPage, this.postsPerPage");
-    console.log(this.pageIndex, this.currentPage, this.postsPerPage);
   }
 
   ngOnDestroy() {
