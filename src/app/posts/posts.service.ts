@@ -114,6 +114,6 @@ export class PostsService {
   }
 
   deletePost(postId: string) {
-    return this.http.delete("http://localhost:3000/api/posts/" + postId);
+    return this.http.delete(environment.apiURL + "/posts/" + postId);
   }
 }
