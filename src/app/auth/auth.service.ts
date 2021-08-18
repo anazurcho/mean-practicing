@@ -9,7 +9,7 @@ import { Subject } from "rxjs";
 @Injectable({ providedIn: "root" })
 export class AuthService {
   private isAuthenticated = false;
-  private token: string = "";
+  private token: string | null = "";
   private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -48,5 +48,11 @@ export class AuthService {
 
         console.log(response);
       });
+  }
+
+  logout() {
+    this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
   }
 }

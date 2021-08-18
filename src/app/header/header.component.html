@@ -25,5 +25,7 @@
     routerLinkActive="mat-accent"
     >SingUp</a
   >
-  <button *ngIf="userIsAuthentificated" mat-button>Logout</button>
+  <button *ngIf="userIsAuthentificated" mat-button (click)="onLogout()">
+    Logout
+  </button>
 </mat-toolbar>
