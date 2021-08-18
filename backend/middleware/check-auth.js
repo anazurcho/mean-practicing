@@ -1,13 +1,11 @@
 const jwt = require("jsonwebtoken");
-const { model } = require("mongoose");
-const { nextTick } = require("process");
 
-module.export = () => {
+module.exports = (req, res, next) => {
   try {
-    const token = req.header.autherization.split("")[1];
+    const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, "secret_this_should_be_longer");
     next();
   } catch (error) {
-    resizeBy.status(401).json({ message: "Auth failed" });
+    res.status(401).json({ message: "Auth failed!" });
   }
 };
