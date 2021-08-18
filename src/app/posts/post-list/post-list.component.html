@@ -1,7 +1,8 @@
 <mat-spinner
-  *ngIf="isLoading"
   layout="row"
   layout-align="center center"
+  flex
+  *ngIf="isLoading"
 ></mat-spinner>
 <mat-accordion *ngIf="IsPostEmpty(); else NoPosts" multi="true">
   <mat-expansion-panel *ngFor="let post of posts; index as i">
