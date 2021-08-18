@@ -18,6 +18,8 @@ import { PostListComponent } from "./posts/post-list/post-list.component";
 import { HeaderComponent } from "./header/header.component";
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { LoginComponent } from "./auth/login/login.component";
+import { SignupComponent } from "./auth/signup/signup.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     HeaderComponent,
     PostCreateComponent,
     PostListComponent,
+    LoginComponent,
+    SignupComponent,
   ],
   imports: [
     HttpClientModule,

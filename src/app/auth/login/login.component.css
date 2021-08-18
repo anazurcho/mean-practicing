@@ -1,0 +1,17 @@
+:host {
+  margin-top: 1rem;
+  display: block;
+}
+
+.info-text {
+  text-align: center;
+}
+
+mat-card {
+  margin: auto;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: auto;
+}
