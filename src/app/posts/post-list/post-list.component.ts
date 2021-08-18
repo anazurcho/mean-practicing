@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { Subscription } from "rxjs";
+import { AuthService } from "src/app/auth/auth.service";
 
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
@@ -20,7 +21,13 @@ export class PostListComponent implements OnInit, OnDestroy {
   currentPage = 1; //
   private postsSub!: Subscription;
 
-  constructor(public postsService: PostsService) {}
+  userIsAuthentificated = false;
+  private authStatusSub!: Subscription;
+
+  constructor(
+    public postsService: PostsService,
+    private authService: AuthService
+  ) {}
 
   IsPostEmpty() {
     return (
@@ -54,9 +61,16 @@ export class PostListComponent implements OnInit, OnDestroy {
         this.totalPosts = postData.postCount;
         this.posts = postData.posts;
       });
+    this.userIsAuthentificated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthentificated) => {
+        this.userIsAuthentificated = isAuthentificated;
+      });
   }
 
   ngOnDestroy() {
     this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }
