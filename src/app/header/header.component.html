@@ -4,9 +4,26 @@
   <a mat-button routerLink="/posts/posts" routerLinkActive="mat-accent"
     >Post List</a
   >
-  <a mat-button routerLink="/posts/create" routerLinkActive="mat-accent"
+  <a
+    *ngIf="userIsAuthentificated"
+    mat-button
+    routerLink="/posts/create"
+    routerLinkActive="mat-accent"
     >Create Post</a
   >
-  <a mat-button routerLink="/login" routerLinkActive="mat-accent">Login</a>
-  <a mat-button routerLink="/signup" routerLinkActive="mat-accent">SingUp</a>
+  <a
+    *ngIf="!userIsAuthentificated"
+    mat-button
+    routerLink="/login"
+    routerLinkActive="mat-accent"
+    >Login</a
+  >
+  <a
+    *ngIf="!userIsAuthentificated"
+    mat-button
+    routerLink="/signup"
+    routerLinkActive="mat-accent"
+    >SingUp</a
+  >
+  <button *ngIf="userIsAuthentificated" mat-button>Logout</button>
 </mat-toolbar>
