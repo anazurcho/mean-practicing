@@ -8,3 +8,7 @@ to update server without restarting it
 npm install --save-dev nodemon
 
 npm run start:server
+
+for unique fields
+
+npm install --save mongoose-unique-validator
