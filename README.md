@@ -12,3 +12,5 @@ npm run start:server
 for unique fields
 
 npm install --save mongoose-unique-validator
+
+npm install --save bcrypt
