@@ -3,8 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 
 import { Router } from "@angular/router";
-import { AuthData } from "./auth-data.model";
 import { Subject } from "rxjs";
+
+import { AuthData } from "./auth-data.model";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -44,6 +45,7 @@ export class AuthService {
         if (token) {
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
+          this.router.navigate(["/posts/posts"]);
         }
 
         console.log(response);
@@ -54,5 +56,6 @@ export class AuthService {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
+    this.router.navigate(["/posts/posts"]);
   }
 }
