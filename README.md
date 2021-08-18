@@ -14,3 +14,5 @@ for unique fields
 npm install --save mongoose-unique-validator
 
 npm install --save bcrypt
+
+npm install --save jsonwebtoken

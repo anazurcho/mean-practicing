@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { AuthService } from "../auth.service";
 
 @Component({
   templateUrl: "./login.component.html",
@@ -8,10 +10,13 @@ import { NgForm } from "@angular/forms";
 export class LoginComponent {
   isLoading = false;
 
-  constructor() {}
+  constructor(public authService: AuthService, public route: ActivatedRoute) {}
 
   onLogin(form: NgForm) {
-    console.log(form.value);
+    if (form.invalid) {
+      return;
+    }
+    this.authService.login(form.value.email, form.value.password);
   }
 
   ngOnInit() {}
