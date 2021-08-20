@@ -65,6 +65,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>(environment.apiURL + "/posts/" + id);
   }
 
@@ -106,12 +107,12 @@ export class PostsService {
         title: title,
         content: content,
         imagePath: image,
+        creator: null,
       };
     }
     this.http
       .put(environment.apiURL + "/posts/" + id, postData)
       .subscribe((responseData) => {
-        this.router.navigate(["/posts/posts"]);
         this.router.navigate(["/posts/posts"]);
       });
   }
