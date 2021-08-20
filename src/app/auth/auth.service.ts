@@ -19,12 +19,13 @@ export class AuthService {
   getToken() {
     return this.token;
   }
-  getAuthStatusListener() {
-    return this.authStatusListener.asObservable();
-  }
 
   getIsAuth() {
     return this.isAuthenticated;
+  }
+
+  getAuthStatusListener() {
+    return this.authStatusListener.asObservable();
   }
 
   createUser(email: string, password: string) {

@@ -34,12 +34,14 @@ export class PostsService {
                 content: any;
                 _id: any;
                 imagePath: any;
+                creator: any;
               }) => {
                 return {
                   title: post.title,
                   content: post.content,
                   imagePath: post.imagePath,
                   id: post._id,
+                  creator: post.creator,
                 };
               }
             ),
@@ -109,6 +111,7 @@ export class PostsService {
     this.http
       .put(environment.apiURL + "/posts/" + id, postData)
       .subscribe((responseData) => {
+        this.router.navigate(["/posts/posts"]);
         this.router.navigate(["/posts/posts"]);
       });
   }
